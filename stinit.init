@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# stinit	Initialize SCSI tape drives
+# 
+# chkconfig: - 90 10
+# description: Initialize SCSI tape drives with /sbin/stinit
+# config: /etc/stinit.def
+
+# BEGIN INIT INFO
+# Provides:          stinit
+# Default-Start:
+# Default-Stop:      0 1 2 3 4 5 6
+# Short-Description: Initialize SCSI tape drives
+# Description:       Initialize SCSI tape drives
+# END INIT INFO
+
+. /etc/init.d/functions
+
+exec=/sbin/stinit
+config=/etc/stinit.def
+
+# See how we were called.
+case "$1" in
+  start)
+        [ -x $exec ] || exit 5
+        [ -f $config ] || exit 6
+	$exec
+        ;;
+  stop)
+	;;
+  *)
+        echo $"Usage: $0 {start}"
+        exit 2
+esac
+exit 0
